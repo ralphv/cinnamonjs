@@ -1,0 +1,44 @@
+{
+  "name": "cinnamonjs",
+  "version": "0.1.0",
+  "description": "A data driven approach to E2E testing. Powerful yet simple testing with selenium-webdriver using a data driven approach.",
+  "keywords": [
+    "testing",
+    "performance",
+    "webdriver"
+  ],
+  "author": "ralph varjabedian",
+  "bin": {
+    "cinnamonjs": "./cli.js"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/ralphv/cinnamon.git"
+  },
+  "preferGlobal": true,
+  "dependencies": {
+    "colors": "*",
+    "lodash": "^4.17.4",
+    "require-inject-scope": "^1.0.0",
+    "selenium-webdriver": "^3.6.0"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.16",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-coveralls": "^1.0.1",
+    "grunt-mocha-test": "^0.13.3",
+    "grunt-shell": "^2.1.0",
+    "istanbul": "^1.0.0-alpha.2",
+    "mocha": "^3.5.3",
+    "mocha-lcov-reporter": "^1.2.0",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "main": "index.js"
+}

@@ -1,0 +1,26 @@
+
+-testing of project itself
+
+-take a list of files as a command line, not just single/folder
+
+add total failed
+
+check mode for sanity
+waitForElementToNotBeDisplayed
+
+screenshot mode, one take all screenshots (like now)
+another mode is take screenshots for failed steps only
+
+create two json variants, one with base64 screenshots if they are there.
+if they are there, also create another report with images
+
+
+server:
+  create client (create a folder with client reference the same in database)
+  create website (entity under client, with folder as well)
+  daily deamon that goes over all the clients and runs the tests and pushes stuff
+  email results and cc/bcc an account for us.
+  upload files to the folder and list them as the tests
+  after test is run, push results into database
+  reports will take the results and work with it
+  client access? perhaps with guid is the easiest, instead of username/password.

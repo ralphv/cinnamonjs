@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>CinnamonJs report</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+        var app = angular.module('app', ['ngSanitize']);
+        app.controller("mc", ["$scope", function($scope) {
+            $scope.data = data;
+            $scope.log = log;
+            $scope.fancyElapsed = fancyElapsed;
+            $scope.getResult = function(step) {
+                if (step.runtime.skipped) {
+                    return "[SKIPPED]";
+                }
+                else if(!step.runtime.test) {
+                    return step.runtime.title;
+                } else {
+                    return step.runtime.result ? "[PASSED]" : "[FAILED]";
+                }
+            }
+        }]);
+        app.directive("fileChart", [function() {
+            return {
+                restrict: "EA",
+                template: '<div class="container" style="height:{{chartHeight}}px;"></div>',
+                controller: "fileChartCont",
+                replace: true
+            }
+        }]);
+        app.controller("fileChartCont", ["$scope", "$element", function($scope, $element) {
+            $scope.chartHeight = $scope.file.chartData.length * 60;
+            if ($scope.chartHeight < 300) {
+              $scope.chartHeight = 300;
+            }
+            $scope.subtitle = 'file: ' + $scope.file.shortFile;
+            $scope.seriesName = $scope.file.shortFile;
+            $scope.data = $scope.file.chartData;
+            $($element).highcharts({
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Execution time'
+                },
+                subtitle: {
+                    text: $scope.subtitle
+                },
+                xAxis: {
+                    title: {
+                        text: null
+                    },
+                    labels: {}
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Time (milliseconds)',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' ms.',
+                    formatter: function() {
+                        return this.key + " " + this.y + " ms.";
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function() {
+                                return this.key + " " + this.y + " ms.";
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: $scope.seriesName,
+                    data: $scope.data
+                }]
+            });
+
+
+        }]);
+        function fancyElapsed(seconds) {
+            var _mod = function(value, mod) {
+                return {c: Math.floor(value / mod), r: Math.ceil(value % mod)};
+            };
+            var res = _mod(seconds, 60);
+            seconds = res.r;
+            var minutes = res.c;
+            res = _mod(minutes, 60);
+            minutes = res.r;
+            var hours = res.c;
+
+            var result = "";
+            if(hours) {
+                result += hours + " hour";
+                if(hours != 1) {
+                    result += "s";
+                }
+                result += " ";
+            }
+            if(minutes) {
+                result += minutes + " minute";
+                if(minutes != 1) {
+                    result += "s";
+                }
+                result += " ";
+            }
+            if(seconds) {
+                result += seconds + " second";
+                if(seconds != 1) {
+                    result += "s";
+                }
+                result += " ";
+            }
+            return result.trim();
+        }
+        /* source data*/
+        var log = [TEMPLATE.DATA];
+        /* source data*/
+        var data = log.files;
+        log.totalSteps = 0;
+        log.totalTests = 0;
+        log.totalElapsed = 0;
+        log.totalSkipped = 0;
+        log.totalFailed = 0;
+        data.forEach(function(e) {
+            e.testSteps = [];
+            e.chartData = [];
+            log.totalElapsed += e.elapsed;
+            e.steps.forEach(function(s) {
+                log.totalSteps++;
+                if(s.runtime.test) {
+                    log.totalTests++;
+                    e.testSteps.push(s);
+                    if (!s.runtime.result) {
+                        log.totalFailed++;
+                    }
+                }
+                if (s.runtime.skipped) {
+                    log.totalSkipped++;
+                }
+                var color = '#7cb5ec';
+                if(s.runtime.test) {
+                    if(s.runtime.result) {
+                        color = 'green';
+                    } else {
+                        color = 'red';
+                    }
+                }
+                e.chartData.push({name: s.runtime.title, y: s.runtime.elapsed, color: color});
+            });
+        });
+    </script>
+</head>
+<body ng-controller="mc">
+<span class='page-header'>
+    <h2 class='mark'>CinnamonJs Report</h2>
+</span>
+
+<div class="container">
+    <h4>&nbsp;<u>Date</u>: <span ng-bind="log.Date"></span></h4>
+    <h4>&nbsp;<u>Total files</u>: <span ng-bind="log.files.length"></span></h4>
+    <h4>&nbsp;<u>Total steps</u>: <span ng-bind="log.totalSteps"></span></h4>
+    <h4>&nbsp;<u>Total tests</u>: <span ng-bind="log.totalTests"></span></h4>
+    <h4>&nbsp;<u>Total failed</u>: <span ng-bind="log.totalFailed"></span></h4>
+    <h4>&nbsp;<u>Total skipped</u>: <span ng-bind="log.totalSkipped"></span></h4>
+    <h4>&nbsp;<u>Total elapsed</u>: <span ng-bind="fancyElapsed(log.totalElapsed/1000)"></span></h4>
+</div>
+
+<div class="container">
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#tests">Tests</a></li>
+        <li><a data-toggle="tab" href="#all">All steps</a></li>
+        <li><a data-toggle="tab" href="#charts">Charts</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="tests" class="tab-pane fade in active">
+            <h3>TESTS</h3>
+
+            <p>
+
+            <div ng-repeat="file in data" class="container">
+                <h3>File {{$index+1}}/{{data.length}}</h3>
+                <h4>filename: <span ng-bind="file.shortFile"></span>&nbsp;<b>Steps:<span ng-bind="file.testSteps.length"></span></b></h4>
+                <h5>Elapsed: <span ng-bind="file.fancyElapsed"></span></h5>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Title</th>
+                        <th>Result</th>
+                        <th>Elapsed</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="step in file.testSteps" ng-class="{info:step.runtime.skipped, success:(step.runtime.test && step.runtime.result), danger:(step.runtime.test && !step.runtime.result)}">
+                        <td ng-bind="step.action"></td>
+                        <td ng-bind="step.runtime.title" colspan="{{step.runtime.test ? 1 : 2}}"></td>
+                        <td ng-if="step.runtime.test" ng-bind-html="getResult(step)"></td>
+                        <td ng-if="!step.runtime.skipped"><span ng-bind="step.runtime.elapsed"></span> ms.</td>
+                        <td ng-if="!!step.runtime.skipped">[SKIPPED]</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            </p>
+        </div>
+        <div id="all" class="tab-pane fade">
+            <h3>All steps</h3>
+
+            <p>
+
+            <div ng-repeat="file in data" class="container">
+                <h3>File {{$index+1}}/{{data.length}}</h3>
+                <h4>filename: <span ng-bind="file.shortFile"></span>&nbsp;<b>Steps:<span ng-bind="file.steps.length"></span></b></h4>
+                <h5>Elapsed: <span ng-bind="file.fancyElapsed"></span></h5>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Title</th>
+                        <th>Result</th>
+                        <th>Elapsed</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="step in file.steps" ng-class="{info:step.runtime.skipped, success:(step.runtime.test && step.runtime.result), danger:(step.runtime.test && !step.runtime.result)}">
+                        <td ng-bind="step.action"></td>
+                        <td ng-bind="step.runtime.title" colspan="{{step.runtime.test ? 1 : 2}}"></td>
+                        <td ng-if="step.runtime.test" ng-bind-html="getResult(step)"></td>
+                        <td ng-if="!step.runtime.skipped"><span ng-bind="step.runtime.elapsed"></span> ms.</td>
+                        <td ng-if="!!step.runtime.skipped">[SKIPPED]</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            </p>
+        </div>
+        <div id="charts" class="tab-pane fade">
+            <h3>Charts</h3>
+
+            <span ng-repeat="file in data">
+                <p>
+                    <file-chart></file-chart>
+                </p>
+            </span>
+        </div>
+    </div>
+</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+</body>
+</html>
