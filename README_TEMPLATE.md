@@ -1,4 +1,4 @@
-# cinnamonjs - A data driven approach to E2E testing
+# [cinnamonjs](http://cinnamonjs.com) - A data driven approach to E2E testing
 
 [![NPM](https://nodei.co/npm/cinnamonjs.png?mini=true)](https://nodei.co/npm/cinnamonjs/)
 
@@ -260,4 +260,4 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
-* 0.9.0: Initial version.
+* 0.9.1: Initial version.
