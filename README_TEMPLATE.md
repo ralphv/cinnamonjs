@@ -260,5 +260,6 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 0.9.3: Windows fix.
 * 0.9.2: Windows fix.
 * 0.9.1: Initial version.

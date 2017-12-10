@@ -1,6 +1,6 @@
 {
   "name": "cinnamonjs",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "A data driven approach to E2E testing. Powerful yet simple testing with selenium-webdriver using a data driven approach.",
   "keywords": [
     "testing",
