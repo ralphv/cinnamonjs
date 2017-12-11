@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       },
       release: {
         options: { stdout: true },
-        command: "git push && git checkout master && git merge develop --ff-only && git push && git checkout develop"
+        command: "git push && git checkout master && git merge develop --ff-only && git push && git checkout develop && npm publish"
       },
       sonar: {
         options: { stdout: true },
