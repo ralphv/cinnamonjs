@@ -38,6 +38,10 @@ module.exports = function(grunt) {
         options: { stdout: true },
         command: "istanbul cover --root <%= cover.root %> --preserve-comments --report lcov --dir <%= cover.buildFolder %> _mocha -R grunt test"
       },
+      release: {
+        options: { stdout: true },
+        command: "git push && git checkout master && git merge develop --ff-only && git push && git checkout develop"
+      },
       sonar: {
         options: { stdout: true },
         command: 'sonar-runner'
