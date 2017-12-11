@@ -27,11 +27,14 @@ With this approach, your test files are more readable, easier to maintain and ca
 
     $ npm install -g cinnamonjs
     
-to run tests you can either specify an individual test file directly (or a list of files separated by a comma)    
+After installing cinnamonjs, it will install [selenium-webdriver](https://www.npmjs.com/package/selenium-webdriver). However selenium-webdriver still needs additional components once installed. Please
+refer to the [selenium-webdriver](https://www.npmjs.com/package/selenium-webdriver) page for further instructions.
+    
+To run tests you can either specify an individual test file directly (or a list of files separated by a comma)    
 
     $ cinnamonjs samples/google.test.js
     
-or you can specify a directory full of test files with file names ending with `.test.js`
+Or you can specify a directory full of test files with file names ending with `.test.js`
 
     $ cinnamonjs website1
 
@@ -260,6 +263,8 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 0.9.5: Windows fix.
+* 0.9.4: Windows fix.
 * 0.9.3: Windows fix.
 * 0.9.2: Windows fix.
 * 0.9.1: Initial version.
