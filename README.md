@@ -130,6 +130,13 @@ The locator can have multiple formats:
    'locator' - (mandatory) (locator) DOM locator
 ```
 ```
+'wait.element.not.displayed' - waits for element to not exist or not be visible
+
+* properties:
+   'locator' - (mandatory) (locator) DOM locator
+   'timeout' - (number) The timeout to wait for, defaults to 10 seconds
+```
+```
 'wait.element.not.exists' - waits for element to not exist
 
 * properties:
@@ -160,6 +167,13 @@ The locator can have multiple formats:
 
 * properties:
    'text' - (mandatory) (string) the text to assert doesn't exist
+   'timeout' - (number) The timeout to wait for, defaults to 10 seconds
+```
+```
+'wait.not.text.displayed' - test that text does not exist or is hidden
+
+* properties:
+   'text' - (mandatory) (string) the text to assert doesn't exist or hidden
    'timeout' - (number) The timeout to wait for, defaults to 10 seconds
 ```
 ```
@@ -482,6 +496,9 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 0.9.8: Error handling fixes and adding actions.
+* 0.9.7: Adding actions.
+* 0.9.6: Minor fixes.
 * 0.9.5: Windows fix.
 * 0.9.4: Windows fix.
 * 0.9.3: Windows fix.
