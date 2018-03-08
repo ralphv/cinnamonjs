@@ -496,6 +496,7 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 0.9.9: Fixing samples.
 * 0.9.8: Error handling fixes and adding actions.
 * 0.9.7: Adding actions.
 * 0.9.6: Minor fixes.

@@ -6,6 +6,7 @@
 'use strict';
 
 module.exports = [
+  {action: "set.browser", browser: "chrome"},
   {action: "start"}, // start driver, all files should have this as a first step
   {action: "browser.set.size", width: 1024, height: 768}, // set the browser size
   {action: "browse", url: "http://www.google.com/ncr"}, // browser to the given url
