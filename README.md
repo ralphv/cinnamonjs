@@ -227,6 +227,29 @@ The locator can have multiple formats:
 * properties:
    'text' - (mandatory) (string) The text to search for
 ```
+### Category: browser
+```
+'browser.maximize' - maximize browser window
+```
+```
+'browser.scroll.bottom' - scroll to bottom of page
+```
+```
+'browser.scroll.to.element' - scroll to element
+
+* properties:
+   'locator' - (mandatory) (locator) DOM locator
+```
+```
+'browser.scroll.top' - scroll to top of page
+```
+```
+'browser.set.size' - set browser window to specific size
+
+* properties:
+   'width' - (mandatory) (number) Width required
+   'height' - (mandatory) (number) Height required
+```
 ### Category: set
 ```
 'set.browser' - change driver of browser
@@ -254,16 +277,6 @@ The locator can have multiple formats:
    'locator' - (mandatory) (locator) DOM locator
    'value' - (string) The value to set
 ```
-### Category: switch
-```
-'switch.to' - switch to iframe
-
-* properties:
-   'name' - (mandatory) (string) name of iframe
-```
-```
-'switch.to.default' - switch to default content
-```
 ### Category: get
 ```
 'get.text' - get text of an element
@@ -281,16 +294,15 @@ The locator can have multiple formats:
    'setResult' - (function) The function to call to set the result to
    'result' - (string) The context variable name to fill the result in
 ```
-### Category: browser
+### Category: switch
 ```
-'browser.maximize' - maximize browser window
-```
-```
-'browser.set.size' - set browser window to specific size
+'switch.to' - switch to iframe
 
 * properties:
-   'width' - (mandatory) (number) Width required
-   'height' - (mandatory) (number) Height required
+   'name' - (mandatory) (string) name of iframe
+```
+```
+'switch.to.default' - switch to default content
 ```
 ### Category: Others
 ```
@@ -496,12 +508,14 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
-* 0.9.9: Fixing samples.
-* 0.9.8: Error handling fixes and adding actions.
-* 0.9.7: Adding actions.
-* 0.9.6: Minor fixes.
-* 0.9.5: Windows fix.
-* 0.9.4: Windows fix.
-* 0.9.3: Windows fix.
-* 0.9.2: Windows fix.
-* 0.9.1: Initial version.
+* 0.9.11: Adding 3 scroll actions.
+* 0.9.10: Minor fixes.
+* 0.9.9:  Fixing samples.
+* 0.9.8:  Error handling fixes and adding actions.
+* 0.9.7:  Adding actions.
+* 0.9.6:  Minor fixes.
+* 0.9.5:  Windows fix.
+* 0.9.4:  Windows fix.
+* 0.9.3:  Windows fix.
+* 0.9.2:  Windows fix.
+* 0.9.1:  Initial version.
