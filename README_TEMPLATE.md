@@ -54,15 +54,15 @@ __Simple example__
 
 ```js
 module.exports = [
+  {action: "set.browser", browser: "chrome"},
   {action: "start"},
   {action: "browser.set.size", width: 1024, height: 768},
   {action: "browse", url: "http://www.google.com/ncr"},
   {action: "send.keys", locator: {name: "q"}, keys: "cinnamonjs"},
   {action: "send.keys", locator: {name: "q"}, keys: Key.RETURN},
-  {action: "wait.title", "page.title": "WebDriver - Google Search"},
-  {action: "test.exists", title:"waiting for the result of the search", locator: {id: "pnnext"}}
-];
-```
+  {action: "wait.title", "page.title": "cinnamonjs - Google Search"},
+  {action: "test.element.exists", title:"waiting for the result of the search", locator: {id: "pnnext"}}
+];```
 
 Each test file has the following variables injected into it:
 
