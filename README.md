@@ -54,15 +54,15 @@ __Simple example__
 
 ```js
 module.exports = [
+  {action: "set.browser", browser: "chrome"},
   {action: "start"},
   {action: "browser.set.size", width: 1024, height: 768},
   {action: "browse", url: "http://www.google.com/ncr"},
   {action: "send.keys", locator: {name: "q"}, keys: "cinnamonjs"},
   {action: "send.keys", locator: {name: "q"}, keys: Key.RETURN},
-  {action: "wait.title", "page.title": "WebDriver - Google Search"},
-  {action: "test.exists", title:"waiting for the result of the search", locator: {id: "pnnext"}}
-];
-```
+  {action: "wait.title", "page.title": "cinnamonjs - Google Search"},
+  {action: "test.element.exists", title:"waiting for the result of the search", locator: {id: "pnnext"}}
+];```
 
 Each test file has the following variables injected into it:
 
@@ -134,14 +134,14 @@ The locator can have multiple formats:
 
 * properties:
    'locator' - (mandatory) (locator) DOM locator
-   'timeout' - (number) The timeout to wait for, defaults to 10 seconds
+   'timeout' - (number) The timeout to wait for, defaults to 10000 milliseconds
 ```
 ```
 'wait.element.not.exists' - waits for element to not exist
 
 * properties:
    'locator' - (mandatory) (locator) DOM locator
-   'timeout' - (number) The timeout to wait for, defaults to 10 seconds
+   'timeout' - (number) The timeout to wait for, defaults to 10000 milliseconds
 ```
 ```
 'wait.element.text.change.after' - wait for an element to change it's text. used with wait.element.text.change.before
@@ -167,28 +167,28 @@ The locator can have multiple formats:
 
 * properties:
    'text' - (mandatory) (string) the text to assert doesn't exist
-   'timeout' - (number) The timeout to wait for, defaults to 10 seconds
+   'timeout' - (number) The timeout to wait for, defaults to 10000 milliseconds
 ```
 ```
 'wait.not.text.displayed' - test that text does not exist or is hidden
 
 * properties:
    'text' - (mandatory) (string) the text to assert doesn't exist or hidden
-   'timeout' - (number) The timeout to wait for, defaults to 10 seconds
+   'timeout' - (number) The timeout to wait for, defaults to 10000 milliseconds
 ```
 ```
 'wait.text' - wait for any element with text
 
 * properties:
    'text' - (mandatory) (string) the text to assert doesn't exist
-   'timeout' - (number) The timeout to wait for, defaults to 10 seconds
+   'timeout' - (number) The timeout to wait for, defaults to 10000 milliseconds
 ```
 ```
 'wait.title' - wait for the page title
 
 * properties:
    'page.title' - (mandatory) (string) wait until the title matches this
-   'timeout' - (number) The timeout to wait for, defaults to 10 seconds
+   'timeout' - (number) The timeout to wait for, defaults to 10000 milliseconds
 ```
 ### Category: test
 ```
@@ -258,7 +258,7 @@ The locator can have multiple formats:
    'browser' - (mandatory) (string) The browser name
 ```
 ```
-'set.implicitwait' - set the implicitlyWait of the driver
+'set.implicitwait' - set the implicitlyWait (implicit timeout) of the driver
 
 * properties:
    'wait' - (mandatory) (number) The amount to wait for in milliseconds
@@ -508,6 +508,7 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 0.9.12: Fixing documentation and action descriptions of timeouts.
 * 0.9.11: Adding 3 scroll actions.
 * 0.9.10: Minor fixes.
 * 0.9.9:  Fixing samples.

@@ -263,6 +263,7 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 0.9.12: Fixing documentation and action descriptions of timeouts.
 * 0.9.11: Adding 3 scroll actions.
 * 0.9.10: Minor fixes.
 * 0.9.9:  Fixing samples.
