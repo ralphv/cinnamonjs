@@ -62,7 +62,8 @@ module.exports = [
   {action: "send.keys", locator: {name: "q"}, keys: Key.RETURN},
   {action: "wait.title", "page.title": "cinnamonjs - Google Search"},
   {action: "test.element.exists", title:"waiting for the result of the search", locator: {id: "pnnext"}}
-];```
+];
+```
 
 Each test file has the following variables injected into it:
 
