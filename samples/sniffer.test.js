@@ -15,12 +15,20 @@ module.exports = [
   {action: "wait.text", text: "This content was requested using the GET method"},
   {
     action: "browser.sniffer.collect", result: "lastCollectedXMLHttpRequests", setResult: function(data) {
-      this.runtime.title = "This is coming from my step";
+      this.runtime.title = "Sample function to process received collected data";
     }
   },
   {
     action: "info", info: function() {
-      return "this is a new dynamic info";
+      return ["The result from Ajax calls is:", $context["lastCollectedXMLHttpRequests"]];
+    }
+  },
+  {
+    action: "assert", title: "assert that we got the expected text from the Ajax call", condition: function() {
+      return $context["lastCollectedXMLHttpRequests"] && $context["lastCollectedXMLHttpRequests"][0] &&
+             $context["lastCollectedXMLHttpRequests"][0].request && $context["lastCollectedXMLHttpRequests"][0].request.url === "demo_get.asp" &&
+             $context["lastCollectedXMLHttpRequests"][0].response && $context["lastCollectedXMLHttpRequests"][0].response.data &&
+             $context["lastCollectedXMLHttpRequests"][0].response.data.includes("This content was requested using the GET method.");
     }
   }
 ];
