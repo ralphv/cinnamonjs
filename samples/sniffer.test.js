@@ -1,5 +1,11 @@
 /**
- *  The simplest test sample, open google, search for the term WebDriver and wait for results
+ *  This sample:
+ *    opens a browser,
+ *    navigates to a page,
+ *    injects XMLHttpRequests sniffer,
+ *    have Page make Ajax call,
+ *    collect request/response data about the Ajax call(s) made,
+ *    assert extra conditions based on sniffed data.
  */
 
 'use strict';

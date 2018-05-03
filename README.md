@@ -20,6 +20,7 @@
 * Built on top of selenium-webdriver.
 * Your test files are basically an array of steps, each step being a JSON object that executes an action.
 * Each action defines what to do (like click or navigate) or what to test (like existence of element or value of element).
+* Ability to sniff XMLHttpRequest calls (works over https). Check sniffer.test.js under Samples folder.
 
 With this approach, your test files are more readable, easier to maintain and can be written by non developers.
 
@@ -191,6 +192,39 @@ The locator can have multiple formats:
    'page.title' - (mandatory) (string) wait until the title matches this
    'timeout' - (number) The timeout to wait for, defaults to 10000 milliseconds
 ```
+### Category: browser
+```
+'browser.maximize' - maximize browser window
+```
+```
+'browser.scroll.bottom' - scroll to bottom of page
+```
+```
+'browser.scroll.to.element' - scroll to element
+
+* properties:
+   'locator' - (mandatory) (locator) DOM locator
+```
+```
+'browser.scroll.top' - scroll to top of page
+```
+```
+'browser.set.size' - set browser window to specific size
+
+* properties:
+   'width' - (mandatory) (number) Width required
+   'height' - (mandatory) (number) Height required
+```
+```
+'browser.sniffer.collect' - collect data from XmlHttpRequest sniffer that is already attached. The result is an array of Ajax calls (request/response data).
+
+* properties:
+   'setResult' - (function) The function to call to set the result to
+   'result' - (string) The context variable name to fill the result in
+```
+```
+'browser.sniffer.start' - attaches sniffer to XmlHttpRequest ajax calls, must be done AFTER page loads.
+```
 ### Category: test
 ```
 'test.element.disabled' - tests if an element is disabled
@@ -227,29 +261,6 @@ The locator can have multiple formats:
 
 * properties:
    'text' - (mandatory) (string) The text to search for
-```
-### Category: browser
-```
-'browser.maximize' - maximize browser window
-```
-```
-'browser.scroll.bottom' - scroll to bottom of page
-```
-```
-'browser.scroll.to.element' - scroll to element
-
-* properties:
-   'locator' - (mandatory) (locator) DOM locator
-```
-```
-'browser.scroll.top' - scroll to top of page
-```
-```
-'browser.set.size' - set browser window to specific size
-
-* properties:
-   'width' - (mandatory) (number) Width required
-   'height' - (mandatory) (number) Height required
 ```
 ### Category: set
 ```
@@ -307,6 +318,12 @@ The locator can have multiple formats:
 ```
 ### Category: Others
 ```
+'custom' - custom function
+
+* properties:
+   'fn' - (mandatory) (function) The function to execute, it's parameters are injected, if cb is specified it will work in callback mode otherwise, it expects a promise to be returned
+```
+```
 'dropdown.select' - click an element
 
 * properties:
@@ -314,13 +331,16 @@ The locator can have multiple formats:
    'value' - (mandatory) (string) The value to select
 ```
 ```
-'end' - ends driver session
-```
-```
-'custom' - custom function
+'browse' - browse to a url
 
 * properties:
-   'fn' - (mandatory) (function) The function to execute, it's parameters are injected, if cb is specified it will work in callback mode otherwise, it expects a promise to be returned
+   'url' - (mandatory) (string) The url to browse to
+```
+```
+'assert' - asserts condition is true
+
+* properties:
+   'condition' - (mandatory) (boolean) The condition to assert
 ```
 ```
 'info' - add info for reporting
@@ -337,10 +357,10 @@ The locator can have multiple formats:
    'password' - (boolean) Turn off verbose if this field is a password
 ```
 ```
-'context' - an easy way to setup $context
+'clear.element' - clears an element from text
 
 * properties:
-   'context' - (mandatory) (object) the context to set
+   'locator' - (mandatory) (locator) DOM locator
 ```
 ```
 'start' - start driver, must be the first step in every testing file
@@ -352,16 +372,13 @@ The locator can have multiple formats:
    'locator' - (mandatory) (locator) DOM locator
 ```
 ```
-'clear.element' - clears an element from text
+'context' - an easy way to setup $context
 
 * properties:
-   'locator' - (mandatory) (locator) DOM locator
+   'context' - (mandatory) (object) the context to set
 ```
 ```
-'browse' - browse to a url
-
-* properties:
-   'url' - (mandatory) (string) The url to browse to
+'end' - ends driver session
 ```
 
 ## Examples of steps
@@ -509,6 +526,7 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 1.0.00: 3 new actions, assert, browser.sniffer.start and browser.sniffer.collect. Check sniffer.test.js in samples.
 * 0.9.14: Info action should show in first tab.
 * 0.9.13: Documentation was messed up.
 * 0.9.12: Fixing documentation and action descriptions of timeouts.

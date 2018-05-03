@@ -20,6 +20,7 @@
 * Built on top of selenium-webdriver.
 * Your test files are basically an array of steps, each step being a JSON object that executes an action.
 * Each action defines what to do (like click or navigate) or what to test (like existence of element or value of element).
+* Ability to sniff XMLHttpRequest calls (works over https). Check sniffer.test.js under Samples folder.
 
 With this approach, your test files are more readable, easier to maintain and can be written by non developers.
 
@@ -264,6 +265,7 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 1.0.00: 3 new actions, assert, browser.sniffer.start and browser.sniffer.collect. Check sniffer.test.js in samples.
 * 0.9.14: Info action should show in first tab.
 * 0.9.13: Documentation was messed up.
 * 0.9.12: Fixing documentation and action descriptions of timeouts.
