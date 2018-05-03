@@ -1,0 +1,84 @@
+/**
+ * Created by Ralph Varjabedian on 5/3/18.
+ * An XMLHttpRequest injector sniffer
+ *
+ * pros: works on https.
+ * cons: the page must not be refreshed after the code is injected, also the injector might not work on all browsers.
+ */
+
+return (function(attachCollector) {
+  if(typeof(XMLHttpRequest) === "undefined") {
+    throw new Error("XMLHttpRequest not found, XMLHttpRequestSniffer can not run on this browser.")
+  }
+  if(!XMLHttpRequest.IsSnifferAttached) {
+    XMLHttpRequest.IsSnifferAttached = true;
+    var _open = XMLHttpRequest.prototype.open;
+    var requestDone = function() {
+      if(!XMLHttpRequest.currentCollector) {
+        return;
+      }
+      this._sniffer.response.data = this.response;
+      var allHeaders = this.getAllResponseHeaders();
+      allHeaders = allHeaders.split('\r\n');
+      this._sniffer.response.headers = {};
+      for(var h = 0; h < allHeaders.length; h++) {
+        var parts = allHeaders[h].split(':');
+        if(parts.length >= 2) {
+          var name = parts.shift().toLowerCase();
+          this._sniffer.response.headers[name] = parts.join('');
+        }
+      }
+      this._sniffer.response.statusCode = this.status;
+      this._sniffer.success = true;
+      this._sniffer.timestamp = new Date();
+      this._sniffer = null;
+    };
+    XMLHttpRequest.prototype.open = function(method, url, async) {
+      if(XMLHttpRequest.currentCollector) {
+        this._sniffer = {request: {method: method, url: url, async: async, headers: {}, data: ""}, response: {data: ""}, success: false};
+        if(this._sniffer.request.url.indexOf("//") === 0) {// no protocol
+          this._sniffer.request.url = window.location.protocol + this._sniffer.request.url;
+        }
+        XMLHttpRequest.currentCollector.push(this._sniffer);
+      }
+      return _open.apply(this, arguments);
+    };
+    var _setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+    XMLHttpRequest.prototype.setRequestHeader = function(name, value) {
+      if(this._sniffer) {
+        this._sniffer.request.headers[name.toLowerCase()] = value;
+      }
+      return _setRequestHeader.apply(this, arguments);
+    };
+    var _send = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.send = function(data) {
+      if(this._sniffer) {
+        this._sniffer.request.data = data;
+        if(this._sniffer.request.async) {
+          this._onreadystatechange = this.onreadystatechange;
+          this.onreadystatechange = function() {
+            this._sniffer.response.readyState = this.readyState;
+            if(this.readyState === 4) {//DONE
+              requestDone.call(this);
+            }
+            if(this._onreadystatechange) {
+              this._onreadystatechange.apply(this, arguments);
+            }
+          }
+        }
+      }
+      var res = _send.apply(this, arguments);
+      if(this._sniffer && !this._sniffer.request.async) {
+        requestDone.call(this);
+      }
+      return res;
+    };
+  }
+  if(attachCollector === true) {
+    XMLHttpRequest.currentCollector = [];
+  } else {
+    var currentCollector = XMLHttpRequest.currentCollector;
+    XMLHttpRequest.currentCollector = null;
+    return currentCollector ? JSON.parse(JSON.stringify(currentCollector)) : null;
+  }
+}).apply(null, arguments);
