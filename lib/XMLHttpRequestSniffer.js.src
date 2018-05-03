@@ -10,8 +10,8 @@ return (function(attachCollector) {
   if(typeof(XMLHttpRequest) === "undefined") {
     throw new Error("XMLHttpRequest not found, XMLHttpRequestSniffer can not run on this browser.")
   }
-  if(!XMLHttpRequest.IsSnifferAttached) {
-    XMLHttpRequest.IsSnifferAttached = true;
+  if(!XMLHttpRequest.isSnifferAttached) {
+    XMLHttpRequest.isSnifferAttached = true;
     var _open = XMLHttpRequest.prototype.open;
     var requestDone = function() {
       if(!XMLHttpRequest.currentCollector) {
