@@ -7,13 +7,20 @@
 module.exports = [
   {action: "set.browser", browser: "chrome"},
   {action: "start"},
-  {action: "browser.set.size", width: 1024, height: 768},
-  {action: "browse", url: "http://www.google.com/ncr"},
+  {action: "browser.maximize"},
+  {action: "browse", url: "https://www.w3schools.com/js/tryit.asp?filename=tryjs_ajax_get"},
+  {action: "switch.to", name: "iframeResult"},
   {action: "browser.sniffer.start"},
-  {action: "wait", for: 100000000},
-  {action: "send.keys", locator: {name: "q"}, keys: "cinnamonjs"},
-  {action: "send.keys", locator: {name: "q"}, keys: Key.RETURN},
-  {action: "wait.title", "page.title": "cinnamonjs - Google Search"},
-  {action: "test.element.exists", title:"waiting for the result of the search", locator: {id: "pnnext"}},
-  {action: "browser.sniffer.collect"}
+  {action: "click", locator: {css: "body > button"}},
+  {action: "wait.text", text: "This content was requested using the GET method"},
+  {
+    action: "browser.sniffer.collect", result: "lastCollectedXMLHttpRequests", setResult: function(data) {
+      this.runtime.title = "This is coming from my step";
+    }
+  },
+  {
+    action: "info", info: function() {
+      return "this is a new dynamic info";
+    }
+  }
 ];
