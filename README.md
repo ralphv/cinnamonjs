@@ -499,10 +499,10 @@ The report contains the following information:
 * Total number of steps (including run, failed and skipped).
 * Total time elapsed.
 * The main view contains 4 tabs that give the following information:
-** Tests: A tab that shows only the steps that are 'test' steps.
-** All steps: A tab that shows the full list of steps.
-** Charts: A tab that shows a bar chart with the list of steps alongside their execution time.
-** Screenshots: A tab that shows for each step, a screenshot of the browser.  
+  * Tests: A tab that shows only the steps that are 'test' steps.
+  * All steps: A tab that shows the full list of steps.
+  * Charts: A tab that shows a bar chart with the list of steps alongside their execution time.
+  * Screenshots: A tab that shows for each step, a screenshot of the browser.  
 
 ## Fallback plan
 
