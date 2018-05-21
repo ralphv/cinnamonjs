@@ -500,9 +500,13 @@ The report contains the following information:
 * Total time elapsed.
 * The main view contains 4 tabs that give the following information:
   * Tests: A tab that shows only the steps that are 'test' steps.
+  [[./docs/images/report-tab-1.png|alt=Tests]]
   * All steps: A tab that shows the full list of steps.
+  [[./docs/images/report-tab-2.png|alt=All steps]]
   * Charts: A tab that shows a bar chart with the list of steps alongside their execution time.
-  * Screenshots: A tab that shows for each step, a screenshot of the browser.  
+  [[./docs/images/report-tab-3.png|alt=Charts]]
+  * Screenshots: A tab that shows for each step, a screenshot of the browser.
+  [[./docs/images/report-tab-4.png|alt=Screenshots]]  
 
 ## Fallback plan
 
