@@ -553,6 +553,7 @@ cinnamonjs is licensed under the [BSD-4 License](https://raw.githubusercontent.c
 
 ## Changelog
 
+* 1.0.01: Adding info about reports.
 * 1.0.00: 3 new actions, assert, browser.sniffer.start and browser.sniffer.collect. Check sniffer.test.js in samples.
 * 0.9.14: Info action should show in first tab.
 * 0.9.13: Documentation was messed up.

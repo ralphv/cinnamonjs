@@ -1,6 +1,6 @@
 {
   "name": "cinnamonjs",
-  "version": "1.0.00",
+  "version": "1.0.01",
   "engines": {
     "node": ">=7.6.0"
   },
