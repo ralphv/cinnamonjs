@@ -8,6 +8,7 @@
 * [Defining steps](#defining-steps)
 * [List of Actions](#list-of-actions)
 * [Examples of steps](#examples-of-steps)
+* [Reports](#reports)
 * [Fallback plan](#fallback-plan)
 * [The command line](#the-command-line)
 * [Help needed](#help-needed)
@@ -480,6 +481,28 @@ later on you can access that value with `$context.$temp_result`
 ```js
   {"action": "wait.text", "text": "next"}
 ```
+
+## Reports
+
+Cinnamonjs keeps a comprehensive running log of all the steps in memory.
+It also flushes a temporary file periodically called `cinnamonjs.running.log.json` in case of a crash, it is removed if the process exists without problems.
+When cinnamonjs is done, it calls one or more 'report' modules. The default is `["json", "html-offline"]` 
+
+json: is a simple report module that just saves the running log as 'log.json' file under the reporting folder.
+
+html-offline: is a very comprehensive html based report. This module generates one file called 'report-offline.html' that can be opened offline. 
+
+The report contains the following information:
+
+* Date/time of the test run.
+* Total number of files.
+* Total number of steps (including run, failed and skipped).
+* Total time elapsed.
+* The main view contains 4 tabs that give the following information:
+** Tests: A tab that shows only the steps that are 'test' steps.
+** All steps: A tab that shows the full list of steps.
+** Charts: A tab that shows a bar chart with the list of steps alongside their execution time.
+** Screenshots: A tab that shows for each step, a screenshot of the browser.  
 
 ## Fallback plan
 
